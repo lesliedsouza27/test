@@ -1,0 +1,8 @@
+---
+- name : Check the Free space
+  tasks:
+  command: free -
+  register: free_ space
+
+- debug: 
+    msg: "{{ free_space.stdout_lines }}"
