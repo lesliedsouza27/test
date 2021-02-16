@@ -1,7 +1,8 @@
 ---
 - name : Check the Free space
+  hosts: all
   tasks:
-  command: free -
+  command: free -m
   register: free_ space
 
 - debug: 
