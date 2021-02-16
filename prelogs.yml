@@ -1,0 +1,14 @@
+---
+- name: Precheck before Patching
+  hosts: "{{ IP_ADDR }}" 
+  serial: 1
+  gather_facts: false
+  tasks:
+    - name: Get the Kernel Version of the Server
+      command: uname -a
+      register: kernel_version
+
+    - name: Print the output of Kernel Version
+      debug:
+        msg: "{{ kernel_version.stdout_lines }}"
+

@@ -1,0 +1,17 @@
+#- name: "echo if organisation directory already existed"
+#  debug:
+#    msg: "the jboss directory is already existed"
+#  when: my_folder.stat.exists 
+--- 
+- name: Creates organisation directory with jobname
+  file:
+    path: /home/deploy/{{ org }}/{{ tower_job_template_name }}
+    state: directory
+    recurse: yes
+  when: my_folder.stat.exists == false
+  #when: not my_folder.stat.exists
+  # 
+  # - name: Copy the content to precheck mount file
+  #   copy: 
+  #       content: "{{ mount_points.stdout }}"
+  #           dest: "/home/deploy/{{ org }}/{{ tower_job_id }}_precheck_mount"

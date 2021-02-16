@@ -1,0 +1,27 @@
+--- 
+- name: Precheck before Patching
+  hosts: "{{ IP_ADDR }}"
+  serial: 1
+  gather_facts: false
+  tasks:
+    - name:
+      shell: echo {{ org }} | awk ' {gsub(/[^a-zA-Z0-9_ \t]/, "", $0); print} '
+      register: org_var
+     
+    - name: 
+      debug:
+        msg:  "{{ org_var.stdout }}"
+
+    - name: Creates organisation directory with jobname
+      file:
+        path: /home/deploy/{{ org_var.stdout }}/{{ tower_job_template_name }}
+        state: directory
+        recurse: yes
+
+#  when: my_folder.stat.exists == false
+  #when: not my_folder.stat.exists
+  # 
+  # - name: Copy the content to precheck mount file
+  #   copy: 
+  #       content: "{{ mount_points.stdout }}"
+  #           dest: "/home/deploy/{{ org }}/{{ tower_job_id }}_precheck_mount"

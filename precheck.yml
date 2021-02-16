@@ -1,0 +1,41 @@
+---
+- name: Precheck before Patching
+  hosts: all
+  serial: 1
+  gather_facts: false
+  tasks:
+    - name: Get the Kernel Version of the Server
+      command: uname -a
+      register: kernel_version
+
+    - name: Get the Mount Point Details of the Server
+      command: df -kh
+      register: mount_point
+
+    - name: Get the Network Details of the Server
+      command: ifconfig -a
+      register: ipdetails
+
+    - name: Get the Memory Usage statistics of the Server
+      command: free -m
+      register: memory_details
+
+
+
+    - name: Print the output of Kernel Version
+      debug:
+        msg: "{{ kernel_version.stdout_lines }}"
+
+    - name: Print the output of Mount Point Details
+      debug:
+        msg: "{{ mount_point.stdout_lines }}"
+
+    - name: Print the output of Network Details
+      debug:
+        msg: "{{ ipdetails.stdout_lines }}"
+
+    - name: Print the output of Memory Usage Details
+      debug:
+        msg: "{{ memory_details.stdout_lines }}"
+
+
